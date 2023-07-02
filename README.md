@@ -1,4 +1,4 @@
-
+```repo struct```
 
 - cmd/
     - main.go
@@ -21,3 +21,12 @@
 - vendor/
 - go.mod
 - go.sum
+
+```run server with go```
+
+`go run cmd/main.go`
+
+
+```run with docker```
+
+updating ...
