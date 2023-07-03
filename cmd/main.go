@@ -9,6 +9,10 @@ import (
 	"github.com/thifnmi/gin-golang-clean-architecture-temp/config"
 	"github.com/thifnmi/gin-golang-clean-architecture-temp/pkg/interfaces/http/handlers"
 	"github.com/thifnmi/gin-golang-clean-architecture-temp/pkg/interfaces/http/router/health"
+	"github.com/thifnmi/gin-golang-clean-architecture-temp/pkg/interfaces/http/router/example"
+	"github.com/thifnmi/gin-golang-clean-architecture-temp/pkg/repositories"
+	"github.com/thifnmi/gin-golang-clean-architecture-temp/utils"
+	"github.com/thifnmi/gin-golang-clean-architecture-temp/pkg/usecases"
 )
 
 func main() {
@@ -80,6 +84,7 @@ func main() {
 	// 		param.ErrorMessage,
 	// 	)
 	// }))
+	db := utils.NewMysqlStorage(conf)
 
 	r.Use(
 		// corsConf, // enable if use config CORS
@@ -95,11 +100,15 @@ func main() {
 		c.Abort()
 		return
 	})
+	exampleRepo := repositories.NewExampleRepository(db.Db())
+	exampleUseCase := usecases.NewExampleUsecase(exampleRepo)
+	exampleHandler := handlers.NewExampleHandler(exampleUseCase)
 
 	healthhandler := handlers.NewHealthHandler()
 
 
-	router.SetupRouterHealth(r, *healthhandler)
+	health.SetupRouter(r, *healthhandler)
+	example.SetupRouter(r, *&exampleHandler)
 
 	if conf.Env == "production" {
 		if err := r.Run(fmt.Sprintf("%s:%s", conf.ServerHost, conf.ServerPort)); err != nil {
