@@ -12,6 +12,7 @@ type AppConfig struct {
 	Env              string `mapstructure:"env"`
 	ServerHost       string `mapstructure:"server_host"`
 	ServerPort       string `mapstructure:"server_port"`
+	MySQLURI         string `mapstructure:"mysql_uri"`
 }
 
 var (
@@ -47,6 +48,7 @@ func InitConfig() *AppConfig {
 				Env:              getEnv("ENV", "development").(string),
 				ServerHost:       getEnv("SERVER_HOST", "0.0.0.0").(string),
 				ServerPort:       getEnv("SERVER_PORT", "8088").(string),
+				MySQLURI:         getEnv("MYSQL_URI", "username:password@tcp(host:port)/database_name?charset=utf8mb4&parseTime=True&loc=Local").(string),
 			}
 		},
 	)
