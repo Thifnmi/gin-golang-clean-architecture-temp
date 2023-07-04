@@ -1,9 +1,13 @@
-```repo struct```
+## Repo struct
 
 - cmd/
     - main.go
 - config/
     - config.go
+- migrations/
+    - sql/
+        - mysql/
+            - sql_file
 - pkg/
     - domain/
         - user.go
@@ -22,11 +26,31 @@
 - go.mod
 - go.sum
 
-```run server with go```
+## Run server with golang
 
-`go run cmd/main.go`
+```bash
+go run cmd/main.go
+```
 
 
-```run with docker```
+## Run with docker
 
 updating ...
+
+
+## Migrate database
+
+I using [go-migrate]() tool to migrate database
+
+* Create sql file
+
+```bash
+migrate create -ext sql -dir mirations/sql/mysql -seq <sql_file_name>
+```
+* After write sql to `sql_file_name.up.sql` flow [sql syntax](https://en.wikipedia.org/wiki/SQL_syntax)
+
+* Apply migrate
+
+```bash
+migrate -path mirations/sql/mysql -database "mysql://username:password@tcp(ip:port)/database_name" up
+```
