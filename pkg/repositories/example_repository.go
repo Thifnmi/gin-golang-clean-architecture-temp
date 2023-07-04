@@ -28,13 +28,13 @@ func NewExampleRepository(db *gorm.DB) ExampleRepository {
 
 func (lr *exampleRepository) GetAll(ctx context.Context, query *domain.ExampleQuery) ([]domain.BaseExampleResponse, *domain.MetadataResponse, error) {
 	var (
-		logs     []domain.Example
+		example     []domain.Example
 		baseExample []domain.BaseExampleResponse
-		metaData domain.MetadataResponse
+		metaData    domain.MetadataResponse
 	)
 	q := lr.db.Model(domain.Example{})
 
-	metaData, err := base_query.GetPaginatedResults(ctx, lr.db, &logs, q, 1, 20)
+	metaData, err := base_query.GetPaginatedResults(ctx, lr.db, &example, q, 1, 20)
 	if err != nil {
 		fmt.Sprintf("error %v when query metadata %v", err, query)
 	}

@@ -45,14 +45,14 @@ func (lu *exampleUsecase) GetAll(ctx context.Context, query *domain.ExampleQuery
 			NextPage:     metaData.NextPage,
 		}
 	}
-	for _, log := range examples {
-		// serviceUUID, _ := uuid.FromString(log.Service)
-		baseLog := domain.BaseExampleResponse{
-			Uuid:        log.Uuid,
-			CreatedAt:   log.CreatedAt,
+	for _, example := range examples {
+		baseExample := domain.BaseExampleResponse{
+			Uuid:      example.Uuid,
+			Name:      example.Name,
+			CreatedAt: example.CreatedAt,
 		}
 
-		response.Data = append(response.Data, baseLog)
+		response.Data = append(response.Data, baseExample)
 	}
 	return response, err
 }
@@ -67,8 +67,8 @@ func (lu *exampleUsecase) GetByID(ctx context.Context, id uuid.UUID) (domain.Exa
 	}
 
 	baseExample := domain.BaseExampleResponse{
-		Uuid:        example.Uuid,
-		CreatedAt:   example.CreatedAt,
+		Uuid:      example.Uuid,
+		CreatedAt: example.CreatedAt,
 	}
 	response.Data = baseExample
 	return response, err

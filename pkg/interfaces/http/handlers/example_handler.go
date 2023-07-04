@@ -31,14 +31,14 @@ func (lh *exampleHandler) GetAll(c *gin.Context) {
 	if err != nil {
 		fmt.Printf("err %v'n", err)
 	}
-	logs, err := lh.exampleUsecase.GetAll(c, &query)
+	examples, err := lh.exampleUsecase.GetAll(c, &query)
 	if err != nil {
 		fmt.Printf("err %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, logs)
+	c.JSON(http.StatusOK, examples)
 }
 
 func (lh *exampleHandler) GetByID(c *gin.Context) {
@@ -49,12 +49,12 @@ func (lh *exampleHandler) GetByID(c *gin.Context) {
 		return
 	}
 
-	log, err := lh.exampleUsecase.GetByID(c, id)
+	example, err := lh.exampleUsecase.GetByID(c, id)
 	if err != nil {
 		fmt.Printf("err %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, log)
+	c.JSON(http.StatusOK, example)
 }
